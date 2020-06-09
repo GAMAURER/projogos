@@ -9,12 +9,6 @@ TextureImporter:
       213: -7060335476001094633
     second: platformerPack_industrial_tilesheet_1
   - first:
-      213: 6229822105629326760
-    second: platformerPack_industrial_tilesheet_0
-  - first:
-      213: -2408413653230958037
-    second: platformerPack_industrial_tilesheet_1
-  - first:
       213: 8142192868897061055
     second: platformerPack_industrial_tilesheet_2
   - first:
@@ -344,30 +338,6 @@ TextureImporter:
   - first:
       213: 2829302724887058892
     second: platformerPack_industrial_tilesheet_111
-  - first:
-      213: 1988290207483304724
-    second: platformerPack_industrial_tilesheet_112
-  - first:
-      213: -4953612376962393622
-    second: platformerPack_industrial_tilesheet_113
-  - first:
-      213: 3888898221089292974
-    second: platformerPack_industrial_tilesheet_114
-  - first:
-      213: 7748815892332084002
-    second: platformerPack_industrial_tilesheet_115
-  - first:
-      213: -5933650321465762059
-    second: platformerPack_industrial_tilesheet_116
-  - first:
-      213: 2400456935079168788
-    second: platformerPack_industrial_tilesheet_117
-  - first:
-      213: -7281561851889995907
-    second: platformerPack_industrial_tilesheet_118
-  - first:
-      213: 7608333845891040941
-    second: platformerPack_industrial_tilesheet_119
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -467,8 +437,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ad79e3b236c47650800000000000000
-      internalID: 6229822105629326760
+      spriteID: 440d383e55e36c270800000000000000
+      internalID: 8270366304322703428
       vertices: []
       indices: 
       edges: []
@@ -488,8 +458,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2ac7feea88939ed0800000000000000
-      internalID: -2408413653230958037
+      spriteID: 714cdd5ba46a40e90800000000000000
+      internalID: -7060335476001094633
       vertices: []
       indices: 
       edges: []
