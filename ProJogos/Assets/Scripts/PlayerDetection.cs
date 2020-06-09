@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerDetection : MonoBehaviour
 {
     public float sightdistance = 5;
+    public float visionangle = 40;
     public Vector2 facing;
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,8 @@ public class PlayerDetection : MonoBehaviour
         float dist = Vector2.Distance(transform.position, player.position);
         if (dist < sightdistance)
         {
-            if (Vector2.Angle(facing, player.position - transform.position) < 60)
+
+            if (Vector2.Angle(facing, player.position - transform.position) < visionangle)
             {
 
                 GetComponent<BoxCollider2D>().enabled = false;
