@@ -4,27 +4,27 @@ public class enemyMovement : MonoBehaviour
 {
     [Range(0.1f, 10f)]
     public float speed;
-    public float xmax;
+    public Vector3 from;
     private Vector3 target;
-    public float xmin;
+    public Vector3 to;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = new Vector3(xmax, transform.position.y, transform.position.z);
+        target = from;
 
     }
 
 
     void Update()
     {
-        if (transform.position.x == xmax)
+        if (transform.position == from)
         {
-            target = new Vector3(xmin, transform.position.y, transform.position.z);
+            target = to;
         }
-        if (transform.position.x == xmin)
+        if (transform.position == to)
         {
-            target = new Vector3(xmax, transform.position.y, transform.position.z);
+            target = from;
         }
 
         float step = speed * Time.deltaTime;

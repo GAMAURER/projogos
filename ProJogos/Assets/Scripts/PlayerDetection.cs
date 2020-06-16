@@ -9,6 +9,7 @@ public class PlayerDetection : MonoBehaviour
     public float visionangle = 40;
     public Vector2 facing;
     public bool isfacingforward = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,8 +24,8 @@ public class PlayerDetection : MonoBehaviour
         float dist = Vector2.Distance(transform.position, player.position);
         if (isfacingforward)
         {
-            facing = transform.forward;
-            Debug.Log("Facing:  " + facing);
+            facing = transform.right;
+            //Debug.Log("Facing:  " + facing);
         }
         if (dist < sightdistance)
         {
