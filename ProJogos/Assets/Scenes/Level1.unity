@@ -364,6 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 2067711926}
+  detectionrange: 2
 --- !u!1 &888442429
 GameObject:
   m_ObjectHideFlags: 0
