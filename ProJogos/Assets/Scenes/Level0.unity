@@ -217,7 +217,6 @@ GameObject:
   - component: {fileID: 1692195770}
   - component: {fileID: 1692195769}
   - component: {fileID: 1692195768}
-  - component: {fileID: 1692195767}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -225,23 +224,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1692195767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1692195766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d0419c588306841972a5dab2a30c16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - {fileID: 0}
-  doors:
-  - {fileID: 0}
-  detectionrange: 1
 --- !u!50 &1692195768
 Rigidbody2D:
   serializedVersion: 4
@@ -303,6 +285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useForce: 0
   speed: 5
+  dialogue: {fileID: 0}
+  state: 0
 --- !u!212 &1692195771
 SpriteRenderer:
   m_ObjectHideFlags: 0
