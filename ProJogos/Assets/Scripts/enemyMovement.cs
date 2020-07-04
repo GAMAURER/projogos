@@ -7,25 +7,36 @@ public class enemyMovement : MonoBehaviour
     public Vector3 from;
     private Vector3 target;
     public Vector3 to;
+    public Vector3[] positions;
+    public int currentpos;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = from;
+        currentpos = 0;
+        target = positions[currentpos];
 
     }
 
 
     void Update()
     {
-        if (transform.position == from)
+        if (transform.position == target)
         {
-            target = to;
+            if(currentpos==positions.Length-1){
+                currentpos = 0;
+                target = positions[currentpos];
+            }
+            else
+            {
+                currentpos += 1;
+                target = positions[currentpos];
+            }
         }
-        if (transform.position == to)
-        {
-            target = from;
-        }
+        //if (transform.position == to)
+        //{
+        //    target = from;
+        //}
 
         float step = speed * Time.deltaTime;
         transform.right = target - transform.position;
