@@ -10,6 +10,8 @@ public class PlayerDetection : MonoBehaviour
     public Vector2 facing;
     public bool isfacingforward = false;
     private GameObject player;
+    public bool reqitem;
+    public string item;
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +43,15 @@ public class PlayerDetection : MonoBehaviour
 
                 if (hitR.collider.name == "Player")
                 {
-                    player.GetComponent<PlayerController>().respawn = true;
                     Debug.Log("You were seen");
+                    if (reqitem && player.GetComponent<PlayerController>().itemsobtained.Contains(item))
+                    {
+                         return;
+                    }
+                    else
+                    {
+                        player.GetComponent<PlayerController>().respawn = true;
+                    }
                 }
             }
         }

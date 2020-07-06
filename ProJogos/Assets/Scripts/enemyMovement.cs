@@ -2,11 +2,11 @@
 
 public class enemyMovement : MonoBehaviour
 {
-    [Range(0.1f, 10f)]
+    [Range(0f, 10f)]
     public float speed;
-    public Vector3 from;
+    //public Vector3 from;
     private Vector3 target;
-    public Vector3 to;
+    //public Vector3 to;
     public GameObject[] positions;
     public int currentpos;
     private GameObject player;

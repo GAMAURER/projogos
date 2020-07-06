@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public GameObject dialogue;
     public bool active = true;
-    HashSet<string> itemsobtained;
+    public HashSet<string> itemsobtained;
 
     // Start is called before the first frame update
     void Start()
