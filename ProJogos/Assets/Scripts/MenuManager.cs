@@ -125,12 +125,13 @@ public class MenuManager : MonoBehaviour
                 Debug.Log("Too many items");
                 break;
             }
-            var container = menuPanel.transform.GetChild(i);
+            var imgObj = menuPanel.transform.GetChild(i).GetChild(0);
 
-            var image = container.transform.GetChild(0).GetComponent<Image>();
+            var image = imgObj.GetComponent<Image>();
+            image.sprite = plyr.itemsImgMap[item];
+
+            imgObj.gameObject.SetActive(true);
             
-
-
             i++;
             
         }
@@ -184,6 +185,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void grabItem()
+    {
 
+    }
 
 }
