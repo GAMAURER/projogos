@@ -152,19 +152,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        /*if (interact2)
+        if (interact2)
         {
-            if(active)
-            {
-                active = !menuMan.Activate();
 
-            }
-            else
-            {
-                active = menuMan.Deactivate();
-            }
-
-        }*/
+            menuMan.loadMenu();
+            active = false;
+        }
 
 
     }
