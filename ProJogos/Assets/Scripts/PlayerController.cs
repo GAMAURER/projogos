@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     public bool useForce;
     public bool respawn = false;
-    private string nextSpawn;
+    private string nextSpawn="PlayerSpawn";
 
     private string currScene;
     private MenuManager menuMan;

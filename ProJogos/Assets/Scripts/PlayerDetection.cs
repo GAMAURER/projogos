@@ -9,10 +9,12 @@ public class PlayerDetection : MonoBehaviour
     public float visionangle = 40;
     public Vector2 facing;
     public bool isfacingforward = false;
-    
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         facing = new Vector2(-1, 0);
     }
 
@@ -39,6 +41,7 @@ public class PlayerDetection : MonoBehaviour
 
                 if (hitR.collider.name == "Player")
                 {
+                    player.GetComponent<PlayerController>().respawn = true;
                     Debug.Log("You were seen");
                 }
             }

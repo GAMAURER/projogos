@@ -7,30 +7,36 @@ public class enemyMovement : MonoBehaviour
     public Vector3 from;
     private Vector3 target;
     public Vector3 to;
-    public Vector3[] positions;
+    public GameObject[] positions;
     public int currentpos;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         currentpos = 0;
-        target = positions[currentpos];
+        target = positions[currentpos].transform.position;
 
     }
 
 
     void Update()
     {
+        if (!player.GetComponent<PlayerController>().active)
+        {
+            return;
+        }
         if (transform.position == target)
         {
             if(currentpos==positions.Length-1){
                 currentpos = 0;
-                target = positions[currentpos];
+                target = positions[currentpos].transform.position;
             }
             else
             {
                 currentpos += 1;
-                target = positions[currentpos];
+                target = positions[currentpos].transform.position;
             }
         }
         //if (transform.position == to)
