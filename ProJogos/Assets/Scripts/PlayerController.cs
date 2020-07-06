@@ -24,10 +24,12 @@ public class PlayerController : MonoBehaviour
     public GameObject dialogue;
     public bool active = true;
     HashSet<string> itemsobtained;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
         currScene = "Level1";
 
@@ -87,6 +89,9 @@ public class PlayerController : MonoBehaviour
 
         Interaction(interact1, interact2);
         TryMove(movement);
+
+
+        Animate();
         
     }
     bool TryMove(Vector2 movement)
@@ -167,6 +172,12 @@ public class PlayerController : MonoBehaviour
         inputDelay = DELAY;
         return true;
 
+    }
+
+    private void Animate()
+    {
+        anim.SetFloat("hspeed", rb.velocity.x);
+        anim.SetFloat("vspeed", rb.velocity.y);
     }
 
 }
