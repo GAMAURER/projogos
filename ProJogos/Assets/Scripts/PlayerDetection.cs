@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerDetection : MonoBehaviour
 {
 
@@ -12,12 +13,13 @@ public class PlayerDetection : MonoBehaviour
     private GameObject player;
     public bool reqitem;
     public string item;
-
+    private MenuManager menuMan;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
         facing = new Vector2(-1, 0);
+        menuMan = GameObject.Find("MenuManager").GetComponent<MenuManager>();
     }
 
     // Update is called once per frame
@@ -50,7 +52,13 @@ public class PlayerDetection : MonoBehaviour
                     }
                     else
                     {
-                        player.GetComponent<PlayerController>().respawn = true;
+                        PlayerController pc = player.GetComponent<PlayerController>();
+                        pc.active = false;
+                        var diagEvent = GetComponent<DialogueEvent>(); 
+                        var diagList = diagEvent.diags;
+                        var portList = diagEvent.portraits;
+                        menuMan.loadDiag(diagList, portList);
+                        pc.respawn = true;
                     }
                 }
             }
