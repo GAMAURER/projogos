@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
         
 
-        if (respawn)
+        if (respawn&&active)
         {
             transform.position = GameObject.Find(nextSpawn).transform.position;
             respawn = false;
