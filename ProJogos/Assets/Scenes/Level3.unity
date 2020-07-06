@@ -5175,7 +5175,7 @@ GameObject:
   - component: {fileID: 2980894989316772097}
   - component: {fileID: 2980894989316772098}
   m_Layer: 0
-  m_Name: Background
+  m_Name: PlayerSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

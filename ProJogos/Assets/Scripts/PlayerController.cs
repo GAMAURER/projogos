@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public bool active = true;
 
     public HashSet<string> itemsobtained;
+    public Dictionary<string,Sprite> itemsImgMap;
 
     private Animator anim;
 
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         boxcol = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         itemsobtained = new HashSet<string>();
+        itemsImgMap = new Dictionary<string, Sprite>();
 
         menuMan = GameObject.Find("MenuManager").GetComponent<MenuManager>();
     }
@@ -117,6 +119,7 @@ public class PlayerController : MonoBehaviour
             {
                 var a = hit.gameObject;
                 itemsobtained.Add(a.name);
+                itemsImgMap.Add(a.name, a.GetComponent<SpriteRenderer>().sprite);
                 Debug.Log("Got " + a.name);
                 a.SetActive(false);
             }
@@ -152,19 +155,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        /*if (interact2)
+        if (interact2)
         {
-            if(active)
-            {
-                active = !menuMan.Activate();
 
-            }
-            else
-            {
-                active = menuMan.Deactivate();
-            }
-
-        }*/
+            menuMan.loadMenu();
+            active = false;
+        }
 
 
     }

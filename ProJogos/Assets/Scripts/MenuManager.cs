@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class MenuManager : MonoBehaviour
     private float inputDelay = 0;
     private const float DELAY = 0.3f;
     private bool active = false;
+    private int mode = 1;
     public GameObject canvas;
     public GameObject menuPanel;
     public GameObject textPanel;
@@ -19,7 +21,10 @@ public class MenuManager : MonoBehaviour
     public List<GameObject> portraits; 
     public int diagIndex;
     public bool changeDiag = false;
+    PlayerController plyr;
 
+
+    
     void Start()
     {
         canvas = GameObject.Find("Canvas");
@@ -27,6 +32,7 @@ public class MenuManager : MonoBehaviour
         textPanel = canvas.transform.Find("TextPanel").gameObject;
         textMesh = textPanel.transform.Find("Text").gameObject.GetComponent<TextMeshProUGUI>();
         activeDiag = null;
+        plyr = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -35,6 +41,7 @@ public class MenuManager : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         bool interact1 = false;
+        bool interact2 = false;
 
         if (inputDelay > 0)
         {
@@ -45,8 +52,9 @@ public class MenuManager : MonoBehaviour
         else
         {
             interact1 = Input.GetButton("Fire1");
+            interact2 = Input.GetButton("Fire2");
 
-            if (interact1 )
+            if (interact1 || interact2 )
             {
                 inputDelay = DELAY;
             }
@@ -54,25 +62,28 @@ public class MenuManager : MonoBehaviour
 
         if (active)
         {
-            Debug.Log("Dialogue Activated");
-            CutsceneInteraction(horizontal, vertical, interact1);
+            if(mode ==1)
+            {
+                Debug.Log("Dialogue Activated");
+                CutsceneInteraction(horizontal, vertical, interact1);
+            }
+            else if (mode == 2)
+            {
+                Debug.Log("Menu Open");
+                MenuInteraction(horizontal, vertical, interact1,interact2);
+            }
+            
         }
 
     }
 
-    public bool Activate()
-    {
-        Debug.Log("Activating");
-        active = true;
-        textPanel.SetActive(true);
-        return true;
-
-    }
+   
     public bool Deactivate()
     {
         Debug.Log("Deactivating");
         active = false;
         textPanel.SetActive(false);
+        menuPanel.SetActive(false);
         foreach (GameObject portrait in portraits)
         {
             portrait.SetActive(false);
@@ -90,8 +101,44 @@ public class MenuManager : MonoBehaviour
         textMesh.text = activeDiag[diagIndex];
         portraits[portraitIndex[diagIndex]].SetActive(true);
         changeDiag = false;
-        Activate();
+        mode = 1;
+
+
+        Debug.Log("Activating");
+        active = true;
+        textPanel.SetActive(true);
+
     }
+
+    public void loadMenu()
+    {
+        menuPanel.SetActive(true);
+        mode = 2;
+        active = true;
+        var itemset = plyr.itemsobtained;
+        int count = menuPanel.transform.childCount;
+        int i = 0;
+        foreach (string item in itemset)
+        {
+            if (i > count - 1)
+            {
+                Debug.Log("Too many items");
+                break;
+            }
+            var imgObj = menuPanel.transform.GetChild(i).GetChild(0);
+
+            var image = imgObj.GetComponent<Image>();
+            image.sprite = plyr.itemsImgMap[item];
+
+            imgObj.gameObject.SetActive(true);
+            
+            i++;
+            
+        }
+
+
+    }
+
 
     void CutsceneInteraction(float hor, float vert, bool inter)
     {
@@ -112,7 +159,7 @@ public class MenuManager : MonoBehaviour
             if(diagIndex > activeDiag.Count-1)
             {
                 Deactivate();
-                GameObject.Find("Player").GetComponent<PlayerController>().Activate();
+                plyr.Activate();
                 
             }
             else
@@ -123,10 +170,24 @@ public class MenuManager : MonoBehaviour
             
         }
 
-
         
-    }
- 
 
+
+
+    }
+
+    void MenuInteraction(float hor, float vert, bool inter1,bool inter2)
+    {
+        if(inter2)
+        {
+            Deactivate();
+            plyr.Activate();
+        }
+    }
+
+    public void grabItem()
+    {
+
+    }
 
 }
