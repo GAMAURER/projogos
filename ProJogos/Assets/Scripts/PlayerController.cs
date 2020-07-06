@@ -136,7 +136,8 @@ public class PlayerController : MonoBehaviour
                 if(diagEvent != null)
                 {
                     var diagList = diagEvent.diags;
-                    menuMan.loadDiag(diagList);
+                    var portList = diagEvent.portraits;
+                    menuMan.loadDiag(diagList, portList);
                     active = false;
                 }
             }

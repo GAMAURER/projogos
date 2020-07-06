@@ -15,6 +15,8 @@ public class MenuManager : MonoBehaviour
     public TextMeshProUGUI textMesh;
 
     public List<string> activeDiag;
+    public List<int> portraitIndex;
+    public List<GameObject> portraits; 
     public int diagIndex;
     public bool changeDiag = false;
 
@@ -71,16 +73,22 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Deactivating");
         active = false;
         textPanel.SetActive(false);
+        foreach (GameObject portrait in portraits)
+        {
+            portrait.SetActive(false);
+        }
         return true;
 
     }
 
-    public void loadDiag(List<string> newDiag)
+    public void loadDiag(List<string> newDiag, List<int> portIndex)
     {
         
         activeDiag = newDiag;
+        portraitIndex = portIndex;
         diagIndex = 0;
         textMesh.text = activeDiag[diagIndex];
+        portraits[portraitIndex[diagIndex]].SetActive(true);
         changeDiag = false;
         Activate();
     }
@@ -89,6 +97,11 @@ public class MenuManager : MonoBehaviour
     {
         if(changeDiag)
         {
+            foreach (GameObject portrait in portraits)
+            {
+                portrait.SetActive(false);
+            }
+            portraits[portraitIndex[diagIndex]].SetActive(true);
             textMesh.text = activeDiag[diagIndex];
             changeDiag = false;
         }

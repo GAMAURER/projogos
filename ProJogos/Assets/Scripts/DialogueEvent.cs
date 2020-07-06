@@ -6,6 +6,7 @@ public class DialogueEvent : MonoBehaviour
 {
     // Start is called before the first frame update
     public List<string> diags;
+    public List<int> portraits;
     void Start()
     {
     }

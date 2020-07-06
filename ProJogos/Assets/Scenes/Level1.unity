@@ -4161,10 +4161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diags:
-  - HEEEEYEEEEEEEEEEEEEEEEEEEYEYEEYEEYEAH
-  - The FIDE Chess.com Online Nations Cup is a 6-team double round-robin tournament
-    taking place from 5-10 May 2020. Teams consist of 6 players, with 4 playing in
-    each round. At least one woman must play in each match.
+  - WAAAHOSFAFSdsgadgfsd
+  - fasghdahsdfhfasghdahsdfhfasghdahsdfhfasghdahsdfhfasghdahsdfh
+  portraits: 0000000001000000
 --- !u!61 &1297370493
 BoxCollider2D:
   m_ObjectHideFlags: 0
