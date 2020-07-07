@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
                 itemsImgMap.Add(a.name, a.GetComponent<SpriteRenderer>().sprite);
                 Debug.Log("Got " + a.name);
                 a.SetActive(false);
+                return;
             }
             hit = null;
             hit = Physics2D.OverlapCircle(transform.position, 1.5f, LayerMask.GetMask("Doors"));
@@ -135,6 +136,7 @@ public class PlayerController : MonoBehaviour
                 SceneManager.LoadScene(newscene, LoadSceneMode.Additive);
                 currScene = newscene;
                 Debug.Log("loadedscene " + newscene);
+                return;
             }
 
             hit = Physics2D.OverlapCircle(transform.position, 1.5f, LayerMask.GetMask("Characters"));
@@ -150,6 +152,7 @@ public class PlayerController : MonoBehaviour
                     var portList = diagEvent.portraits;
                     menuMan.loadDiag(diagList, portList);
                     active = false;
+                    return;
                 }
             }
 
