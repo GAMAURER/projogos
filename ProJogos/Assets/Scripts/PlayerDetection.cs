@@ -14,6 +14,7 @@ public class PlayerDetection : MonoBehaviour
     public bool reqitem;
     public string item;
     private MenuManager menuMan;
+    public bool pacify = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +26,14 @@ public class PlayerDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         Transform player = GameObject.Find("Player").transform;
+
+        if(GameObject.Find("Player").GetComponent<PlayerController>().active == false)
+        {
+            return;
+        }
+
         float dist = Vector2.Distance(transform.position, player.position);
         if (isfacingforward)
         {
@@ -43,10 +50,10 @@ public class PlayerDetection : MonoBehaviour
                 RaycastHit2D hitR = Physics2D.Raycast(transform.position, player.position - transform.position);
                 GetComponent<BoxCollider2D>().enabled = true;
 
-                if (hitR.collider.name == "Player")
+                if (hitR.collider != null && hitR.collider.name == "Player")
                 {
                     Debug.Log("You were seen");
-                    if (reqitem && player.GetComponent<PlayerController>().itemsobtained.Contains(item))
+                    if (pacify)
                     {
                          return;
                     }
@@ -55,10 +62,7 @@ public class PlayerDetection : MonoBehaviour
                         PlayerController pc = player.GetComponent<PlayerController>();
                         pc.active = false;
                         var diagEvent = GetComponent<DialogueEvent>(); 
-                        var diagList = diagEvent.diags;
-                        var portList = diagEvent.portraits;
-                        menuMan.loadDiag(diagList, portList);
-                        pc.respawn = true;
+                        menuMan.loadDiag(diagEvent);
                     }
                 }
             }

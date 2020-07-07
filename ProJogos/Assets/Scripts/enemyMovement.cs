@@ -10,10 +10,12 @@ public class enemyMovement : MonoBehaviour
     public GameObject[] positions;
     public int currentpos;
     private GameObject player;
+    private Transform lightTransform;
 
     // Start is called before the first frame update
     void Start()
     {
+        lightTransform = transform.GetChild(0);
         player = GameObject.Find("Player");
         currentpos = 0;
         target = positions[currentpos].transform.position;
@@ -49,6 +51,9 @@ public class enemyMovement : MonoBehaviour
         // Move objeto na direção do target
         transform.position = Vector3.MoveTowards(transform.position,
             target, step);
+        //lightTransform = transform;
+        //transform.rotation = Quaternion.identity;
+        
     }
     // Update is called once per frame
 

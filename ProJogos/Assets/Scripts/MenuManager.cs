@@ -16,11 +16,15 @@ public class MenuManager : MonoBehaviour
     public GameObject textPanel;
     public TextMeshProUGUI textMesh;
 
-    public List<string> activeDiag;
-    public List<int> portraitIndex;
+    public DialogueEvent currDiag;
     public List<GameObject> portraits; 
     public int diagIndex;
+    public bool checkItem = false;
     public bool changeDiag = false;
+    public bool failDiag = false;
+    public string selectedItem = null;
+    public float holdtime = 0;
+    public GameObject itemHold;
     PlayerController plyr;
 
 
@@ -31,7 +35,6 @@ public class MenuManager : MonoBehaviour
         menuPanel = canvas.transform.Find("MenuPanel").gameObject;
         textPanel = canvas.transform.Find("TextPanel").gameObject;
         textMesh = textPanel.transform.Find("Text").gameObject.GetComponent<TextMeshProUGUI>();
-        activeDiag = null;
         plyr = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -65,7 +68,7 @@ public class MenuManager : MonoBehaviour
             if(mode ==1)
             {
                 Debug.Log("Dialogue Activated");
-                CutsceneInteraction(horizontal, vertical, interact1);
+                CutsceneInteraction(horizontal, vertical, interact1,interact2);
             }
             else if (mode == 2)
             {
@@ -74,6 +77,29 @@ public class MenuManager : MonoBehaviour
             }
             
         }
+
+        if(selectedItem != null && plyr.itemsobtained.Contains(selectedItem))
+        {
+            if (holdtime <= 0)
+            {
+                selectedItem = null;
+                itemHold.SetActive(false);
+            }
+            else
+            {
+                itemHold.SetActive(true);
+                itemHold.transform.position = Input.mousePosition;
+                itemHold.GetComponent<Image>().sprite = plyr.itemsImgMap[selectedItem];
+                holdtime -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            itemHold.SetActive(false);
+        }
+
+        
+        
 
     }
 
@@ -92,16 +118,15 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public void loadDiag(List<string> newDiag, List<int> portIndex)
+    public void loadDiag(DialogueEvent diagEvent)
     {
         
-        activeDiag = newDiag;
-        portraitIndex = portIndex;
-        diagIndex = 0;
-        textMesh.text = activeDiag[diagIndex];
-        portraits[portraitIndex[diagIndex]].SetActive(true);
+        textMesh.text = diagEvent.diags[diagIndex];
+        portraits[diagEvent.portraits[diagIndex]].SetActive(true);
         changeDiag = false;
         mode = 1;
+        currDiag = diagEvent;
+        diagIndex = 0;
 
 
         Debug.Log("Activating");
@@ -115,8 +140,9 @@ public class MenuManager : MonoBehaviour
         menuPanel.SetActive(true);
         mode = 2;
         active = true;
+        failDiag = false;
         var itemset = plyr.itemsobtained;
-        int count = menuPanel.transform.childCount;
+        int count = menuPanel.transform.GetChild(0).childCount;
         int i = 0;
         foreach (string item in itemset)
         {
@@ -125,12 +151,17 @@ public class MenuManager : MonoBehaviour
                 Debug.Log("Too many items");
                 break;
             }
-            var imgObj = menuPanel.transform.GetChild(i).GetChild(0);
+            var imgObj = menuPanel.transform.GetChild(0).GetChild(i).GetChild(0);
+
+            Debug.Log("Setting container" + i + "as" + item);
 
             var image = imgObj.GetComponent<Image>();
             image.sprite = plyr.itemsImgMap[item];
+            
+            image.name = item;
 
             imgObj.gameObject.SetActive(true);
+
             
             i++;
             
@@ -140,7 +171,7 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    void CutsceneInteraction(float hor, float vert, bool inter)
+    void CutsceneInteraction(float hor, float vert, bool inter1,bool inter2)
     {
         if(changeDiag)
         {
@@ -148,22 +179,100 @@ public class MenuManager : MonoBehaviour
             {
                 portrait.SetActive(false);
             }
-            portraits[portraitIndex[diagIndex]].SetActive(true);
-            textMesh.text = activeDiag[diagIndex];
-            changeDiag = false;
+
+            if(failDiag)
+            {
+                portraits[currDiag.failportraits[diagIndex]].SetActive(true);
+                textMesh.text = currDiag.faildiags[diagIndex];
+                changeDiag = false;
+            }
+            else
+            {
+                portraits[currDiag.portraits[diagIndex]].SetActive(true);
+                textMesh.text = currDiag.diags[diagIndex];
+                changeDiag = false;
+
+            }
+            
         }
 
-        if(inter)
+        if(checkItem)
+        {
+
+            if (selectedItem == currDiag.item)
+            {
+                Debug.Log("Right Item");
+                menuPanel.SetActive(false);
+                checkItem = false;
+                changeDiag = true;
+                diagIndex++;
+            }
+            else
+            {
+                if (inter2)
+                {
+                    Debug.Log("Wrong Item");
+                    menuPanel.SetActive(false);
+                    failDiag = true;
+                    changeDiag = true;
+                    diagIndex = 0;
+                    checkItem = false;
+                }
+            }
+            return;
+        }
+        
+
+
+
+        if(inter1)
         {
             diagIndex++;
-            if(diagIndex > activeDiag.Count-1)
+
+            if (failDiag)
             {
+                if (diagIndex > currDiag.faildiags.Count - 1)
+                {
+                    Debug.Log("FAILED");
+                    Deactivate();
+
+                    plyr.Activate();
+                    transform.position = GameObject.Find(plyr.nextSpawn).transform.position;
+                }
+                else
+                {
+                    changeDiag = true;
+                }
+                return;
+            }
+
+
+            if (!checkItem && !failDiag && currDiag.type == 1 && diagIndex == currDiag.itemTestDiag)
+            {
+
+                checkItem = true;
+                loadMenu();
+                mode = 1;
+            }
+
+            
+            if (diagIndex > currDiag.diags.Count-1)
+            {
+
+
                 Deactivate();
+                var enemy = currDiag.gameObject.GetComponent<PlayerDetection>();
+                if (enemy != null)
+                {
+                    enemy.pacify = true;
+                    plyr.respawn = false;
+                }
                 plyr.Activate();
                 
             }
             else
             {
+                
                 changeDiag = true;
             }
 
@@ -185,9 +294,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void grabItem()
-    {
 
+    public void SelectItem(string item)
+    {
+        selectedItem = item;
     }
+
+
 
 }

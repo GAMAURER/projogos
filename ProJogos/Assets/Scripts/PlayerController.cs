@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     public bool useForce;
     public bool respawn = false;
-    private string nextSpawn="PlayerSpawn";
+    public string nextSpawn="PlayerSpawn";
 
     private string currScene;
     private MenuManager menuMan;
@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
                 itemsobtained.Add(a.name);
                 itemsImgMap.Add(a.name, a.GetComponent<SpriteRenderer>().sprite);
                 Debug.Log("Got " + a.name);
+                Debug.Log("Item Count = " + itemsobtained.Count);
                 a.SetActive(false);
                 return;
             }
@@ -148,9 +149,8 @@ public class PlayerController : MonoBehaviour
                 var diagEvent = hit.gameObject.GetComponent<DialogueEvent>();
                 if(diagEvent != null)
                 {
-                    var diagList = diagEvent.diags;
-                    var portList = diagEvent.portraits;
-                    menuMan.loadDiag(diagList, portList);
+                    
+                    menuMan.loadDiag(diagEvent);
                     active = false;
                     return;
                 }
